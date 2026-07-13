@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>AR名刺 - カメラ起動</title>
+  
+  <!-- ARを動かすための仕組み（A-Frame と AR.js）を読み込みます -->
+  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+
+  <style>
+    /* 画面全体にカメラ映像をぴったり映すためのCSS */
+    body { margin: 0; overflow: hidden; }
+  </style>
+
+  <script>
+    /* 浮かんでいるボタンをスマホでタップしたときに、新しいタブでリンクを開く設定 */
+    AFRAME.registerComponent('navigate-on-click', {
+      schema: { url: { default: '' } },
+      init: function () {
+        var data = this.data;
+        this.el.addEventListener('click', function () {
+          window.open(data.url, '_blank'); 
+        });
+      }
+    });
+  </script>
+</head>
+
+<body>
+  <!-- ARの撮影スタジオ（cursorとraycasterの設定で画面タップを可能にしています） -->
+  <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;" cursor="rayorigin: mouse" raycaster="objects: .clickable">
+    
+    <!-- ⚠️注意：AR.js Marker Trainingでダウンロードした「.patt」ファイルの名前をここに書きます -->
+    <!-- この「.patt」ファイルも、このHTMLと同じ「AR_Camera」フォルダ内に保存してください -->
+    <a-marker type="pattern" url="pattern-技ちゃん_青.patt">
+      
+      <!-- 1. 中央：キャラクター（現在はテスト用に「黄色い球体」を配置。後から画像や3Dに変えられます） -->
+      <a-sphere position="0 0.5 0" radius="0.3" material="color: #FFD700;" animation="property: rotation; to: 0 360 0; loop: true; dur: 5000"></a-sphere>
+      
+      <!-- 2. 左側：会社HPのボタン（青い四角） -->
+      <!-- ⚠️「url:」の後に、実際の会社のホームページのURLを書いてください（例: https://gishudo.co.jp） -->
+      <a-box class="clickable" position="-0.6 0.5 0" width="0.4" height="0.4" depth="0.1" material="color: #1E90FF;"
+             navigate-on-click="url: http://www.gishudo.co.jp/">
+      </a-box>
+      
+      <!-- 3. 右側：プロフィールのボタン（緑の四角） -->
+      <!-- 隣のフォルダ「AR_Profile」の中にあるindex.htmlを見に行くためのパス（../）になっています -->
+      <a-box class="clickable" position="0.6 0.5 0" width="0.4" height="0.4" depth="0.1" material="color: #32CD32;"
+             navigate-on-click="url: ../AR_Profile/index.html">
+      </a-box>
+    
+    </a-marker>
+    
+    <!-- スマホのカメラ（おまじない） -->
+    <a-entity camera></a-entity>
+  </a-scene>
+</body>
+</html>
