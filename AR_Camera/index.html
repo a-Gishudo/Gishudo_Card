@@ -2,20 +2,48 @@
 <html lang="ja">
 <head>
   <meta charset="utf-8">
-  <title>ARテスト</title>
-  <!-- 安定して動く最も古いバージョンを明示的に指定 -->
+  <title>AR名刺 - カメラ起動</title>
+  
+  <!-- 確実に動くことが確認できたライブラリ構成 -->
   <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
   <script src="https://raw.githack.com/AR-js-org/AR.js/3.3.1/aframe/build/aframe-ar.js"></script>
+
+  <style>
+    body { margin: 0; overflow: hidden; }
+  </style>
+
+  <script>
+    AFRAME.registerComponent('navigate-on-click', {
+      schema: { url: { default: '' } },
+      init: function () {
+        var data = this.data;
+        this.el.addEventListener('click', function () {
+          window.open(data.url, '_blank');
+        });
+      }
+    });
+  </script>
 </head>
+
 <body style="margin: 0; overflow: hidden;">
-  <!-- debugUIEnabled: false で余計なUIを非消去 -->
-  <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;">
+  <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false; cursor=rayorigin: mouse" raycaster="objects: .clickable">
     
-    <!-- あなたの作ったマーカーを指定 -->
-   <a-marker preset="hiro">
-  <!-- 認識したら赤い立方体を表示する -->
-  <a-box position="0 0.5 0" material="color: red;"></a-box>
-</a-marker>
+    <!-- 1. あなたが作ったマーカーを指定 -->
+    <a-marker type="pattern" url="pattern-Gichan.patt">
+      
+      <!-- 中央：キャラクター画像を表示（waza.png から Gichan.png に変更） -->
+      <a-image src="Gichan.png" position="0 0.5 0" width="1" height="1" rotation="-90 0 0"></a-image>
+
+      <!-- 左側：会社HPのボタン -->
+      <a-box class="clickable" position="-0.6 0.5 0" width="0.4" height="0.4" depth="0.1" material="color: #1E90FF;"
+             navigate-on-click="url: http://www.gishudo.co.jp/"></a-box>
+
+      <!-- 右側：プロフィールのボタン -->
+      <!-- 後でプロフィール用の HTML を配置すれば、タップでそこへ飛べます -->
+      <a-box class="clickable" position="0.6 0.5 0" width="0.4" height="0.4" depth="0.1" material="color: #32CD32;"
+             navigate-on-click="url: ../AR_Profile/index.html"></a-box>
+
+    </a-marker>
 
     <a-entity camera></a-entity>
   </a-scene>
