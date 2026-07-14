@@ -35,8 +35,9 @@
     <!-- この「.patt」ファイルも、このHTMLと同じ「AR_Camera」フォルダ内に保存してください -->
     <a-marker type="pattern" url="pattern-Gichan.patt">
       
-      <!-- 1. 中央：キャラクター（現在はテスト用に「黄色い球体」を配置。後から画像や3Dに変えられます） -->
-      <a-sphere position="0 0.5 0" radius="0.3" material="color: #FFD700;" animation="property: rotation; to: 0 360 0; loop: true; dur: 5000"></a-sphere>
+      <!-- 変更後（画像を表示する設定） -->
+<!-- position="0 0.5 0" で位置を調整、widthとheightで画像の縦横比を調整します -->
+<a-image src="Gichan.png" position="0 0.5 0" width="1" height="1" rotation="-90 0 0"></a-image>
       
       <!-- 2. 左側：会社HPのボタン（青い四角） -->
       <!-- ⚠️「url:」の後に、実際の会社のホームページのURLを書いてください（例: https://gishudo.co.jp） -->
