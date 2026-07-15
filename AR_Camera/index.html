@@ -10,20 +10,13 @@
   <style>
     body { margin: 0; overflow: hidden; font-family: sans-serif; }
 
-    /* 画面下部にボタンを浮かせるためのCSS（スマホでも絶対にタップできます） */
-    .button-container {
-      position: fixed;
-      bottom: 40px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 20px;
-      z-index: 9999; /* AR映像よりも必ず手前に表示する設定 */
-    }
-
+    /* ボタンを画面の中央の高さで、左右に分けて配置する設定 */
     .ar-btn {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%); /* 上下だけ中央に合わせる */
       display: block;
-      width: 130px;
+      width: 120px;
       padding: 15px 0;
       text-align: center;
       text-decoration: none;
@@ -31,17 +24,19 @@
       font-weight: bold;
       font-size: 14px;
       border-radius: 25px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-      transition: background 0.3s;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+      z-index: 9999;
     }
 
-    /* 青いボタン（会社HP） */
+    /* 青いボタン（画面の左端中央） */
     .btn-hp {
+      left: 20px;
       background-color: #1E90FF;
     }
 
-    /* 緑のボタン（プロフィール） */
+    /* 緑のボタン（画面の右端中央） */
     .btn-profile {
+      right: 20px;
       background-color: #32CD32;
     }
   </style>
@@ -49,25 +44,16 @@
 
 <body style="margin: 0; overflow: hidden;">
 
-  <!-- 【追加】画面に絶対に表示され、確実にタップできるボタンエリア -->
-  <div class="button-container">
-    <a href="http://www.gishudo.co.jp/" class="ar-btn btn-hp">会社HP</a>
-    <a href="../AR_Profile/index.html" class="ar-btn btn-profile">プロフィール</a>
-  </div>
+  <!-- 画面左右のボタン設定（別タブ指定付き） -->
+  <a href="http://www.gishudo.co.jp/" target="_blank" rel="noopener noreferrer" class="ar-btn btn-hp">会社HP</a>
+  <a href="../AR_Profile/index.html" target="_blank" rel="noopener noreferrer" class="ar-btn btn-profile">プロフィール</a>
 
   <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;">
     
     <a-marker type="pattern" url="pattern-Gichan.patt">
       
-      <!-- キャラクター画像（つぶれ修正済み） -->
-      <a-image src="Gichan_3D.png" position="0 0.5 0" width="1" height="1.5" rotation="-90 0 0"></a-image>
-
-      <!-- 3Dの箱はタップ用の目印ではなく「装飾（見た目用）」として残しておきます -->
-      <!-- 左の青い箱 -->
-      <a-box position="-0.7 0.5 0" width="0.4" height="0.4" depth="0.1" rotation="-90 0 0" material="color: #1E90FF; opacity: 0.8"></a-box>
-
-      <!-- 右の緑の箱 -->
-      <a-box position="0.7 0.5 0" width="0.4" height="0.4" depth="0.1" rotation="-90 0 0" material="color: #32CD32; opacity: 0.8"></a-box>
+      <!-- キャラクター画像のみを表示（周囲の箱は完全に削除しました） -->
+      <a-image src="Gichan_3D.png" position="0 0.5 0" width="1.5" height="2.25" rotation="-90 0 0"></a-image>
 
     </a-marker>
 
