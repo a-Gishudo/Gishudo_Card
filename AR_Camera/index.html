@@ -4,18 +4,15 @@
   <meta charset="utf-8">
   <title>AR名刺 - カメラ起動</title>
   
-  <!-- A-Frame と AR.js を読み込みます。
-       Safariでも動作確認できた、安定した組み合わせです。 -->
   <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
   <script src="https://raw.githack.com/AR-js-org/AR.js/3.3.1/aframe/build/aframe-ar.js"></script>
 
   <style>
-    /* 画面全体にカメラ映像をぴったり映すためのCSS */
     body { margin: 0; overflow: hidden; }
   </style>
 
   <script>
-    /* 浮かんでいるボタンをスマホでタップしたときに、新しいタブでリンクを開く設定 */
+    // タップ（クリック）されたときにリンクを開く仕組み
     AFRAME.registerComponent('navigate-on-click', {
       schema: { url: { default: '' } },
       init: function () {
@@ -29,31 +26,24 @@
 </head>
 
 <body style="margin: 0; overflow: hidden;">
-  <!-- ARの撮影スタジオ（cursorとraycasterの設定で画面タップを可能にしています）
-       debugUIEnabled: false で、画面下の余計な文字を消しています。 -->
- <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;" cursor="rayorigin: mouse" raycaster="objects: .clickable">
+  <!-- cursor="rayorigin: mouse" と raycaster をここに正しく記述しています -->
+  <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;" cursor="rayorigin: mouse" raycaster="objects: .clickable">
     
-    <!-- ここから下を最終調整しました -->
-
-    <!-- 1. 目印（マーカー）を指定。会社ロゴの.pattファイルを指定します -->
     <a-marker type="pattern" url="pattern-Gichan.patt">
       
-      <!-- 2. 飛び出す（表示する）画像を「Gichan_3D.png」に指定 -->
-      <!-- position="0 0.5 0" でマーカーの少し上に、rotation="-90 0 0" でマーカーと平行に表示します -->
-      <a-image src="Gichan_3D.png" position="0 0.5 0" width="1" height="2" rotation="-90 0 0"></a-image>
+      <!-- キャラクター画像 -->
+      <a-image src="Gichan_3D.png" position="0 0.5 0" width="1" height="1.5" rotation="-90 0 0"></a-image>
 
-      <!-- 3. ボタンの設定（左右の青と緑の箱） -->
-      <!-- 左側：会社HPのボタン -->
+      <!-- 左側：会社HPのボタン（class="clickable" がタップを反応させるために必須です） -->
       <a-box class="clickable" position="-0.7 0.5 0" width="0.4" height="0.4" depth="0.1" rotation="-90 0 0" material="color: #1E90FF; opacity: 0.8"
              navigate-on-click="url: http://www.gishudo.co.jp/"></a-box>
 
-      <!-- 右側：プロフィールのボタン（../AR_Profile/index.html へ飛びます） -->
+      <!-- 右側：プロフィールのボタン -->
       <a-box class="clickable" position="0.7 0.5 0" width="0.4" height="0.4" depth="0.1" rotation="-90 0 0" material="color: #32CD32; opacity: 0.8"
              navigate-on-click="url: ../AR_Profile/index.html"></a-box>
 
     </a-marker>
 
-    <!-- カメラの設定。これがないとARが映りません -->
     <a-entity camera></a-entity>
   </scene>
 </body>
