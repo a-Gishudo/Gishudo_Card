@@ -6,32 +6,37 @@
   
   <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
   <script src="https://raw.githack.com/AR-js-org/AR.js/3.3.1/aframe/build/aframe-ar.js"></script>
+  <!-- 常に正面を向かせるための look-at コンポーネントを読み込みます -->
+  <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
 
   <style>
-    body { margin: 0; overflow: hidden; font-family: sans-serif; }
+    /* 【修正】ボタンの書体（フォント）をご指定のものに設定しました */
+    body { 
+      margin: 0; 
+      overflow: hidden; 
+      font-family: "Hiragino Maru Gothic ProN", "UD Digital Kyokasho NK-R", "HG丸ｺﾞｼｯｸM-PRO", sans-serif; 
+    }
 
-    /* 【リニューアル】雲ボタンの共通設定 */
+    /* 雲ボタンの共通設定 */
     .ar-btn {
       position: fixed;
-      top: 60%; /* 位置を少し下げた状態をキープ */
+      top: 60%; 
       transform: translateY(-50%);
       display: flex;
       align-items: center;
       justify-content: center;
       
-      /* くま耳に見える原因だった「狭い幅に急な丸み」を修正 */
-      /* 横幅を少し広げて、平べったい、シャープさもある「スッキリした雲」へ変更 */
       width: 140px;
       height: 55px;
       padding: 5px;
       text-align: center;
       text-decoration: none;
-      color: #333333; /* 文字色は見やすい濃いグレー */
+      color: #333333; 
       font-weight: bold;
       font-size: 13px;
       line-height: 1.3;
       
-      /* 丸みを抑え、横長に流れるような雲の形に設計し直しました */
+      /* スッキリした雲のデザイン */
       border-radius: 90px 70px 80px 60px / 40px 40px 30px 30px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.12);
       z-index: 9999;
@@ -47,7 +52,6 @@
     .btn-profile {
       right: 25px;
       background-color: #FEF08A;
-      /* 左右非対称にしつつ、こちらも横長の波打つ雲に */
       border-radius: 70px 90px 60px 80px / 40px 40px 30px 30px;
     }
   </style>
@@ -64,11 +68,12 @@
     <a-marker type="pattern" url="pattern-Gichan.patt">
       
       <!-- 
-        【修正：キャラクターを垂直に立たせる設定】
-        ・rotation を「-90 0 0」（ペタッと寝る）から「0 0 0」（垂直に起き上がる）に変更しました。
-        ・垂直に立ったときに地面に埋まらないよう、位置（position）の高さ（中央の数値）を 1.5 に引き上げました。
+        【修正：常にスマホ画面（カメラ）のほうを向く設定】
+        ・「look-at="[camera]"」を追加しました。これで名刺を傾けても、キャラクターが自動で首を振って常にこちらを向いてくれます！
+        ・正面を向く特性上、回転（rotation）は自動制御されるため削除しました。
+        ・高さは「position="0 1.5 0"」で空中フワフワ感をキープしています。
       -->
-      <a-image src="Gichan_AR.png" position="0 1.5 0" width="2.0" height="3.0" rotation="0 0 0"></a-image>
+      <a-image src="Gichan_AR.png" position="0 1.5 0" width="2.0" height="3.0" look-at="[camera]"></a-image>
 
     </a-marker>
 
