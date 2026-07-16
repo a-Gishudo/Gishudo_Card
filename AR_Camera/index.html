@@ -4,92 +4,78 @@
   <meta charset="utf-8">
   <title>AR名刺 - カメラ起動</title>
   
+  <!-- A-Frame と AR.js の安定版ライブラリ -->
   <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
   <script src="https://raw.githack.com/AR-js-org/AR.js/3.3.1/aframe/build/aframe-ar.js"></script>
 
   <style>
     body { margin: 0; overflow: hidden; font-family: sans-serif; }
 
-    /* ボタン全体の共通設定（雲の形にするための設定） */
+    /* 左右の「雲ボタン」の共通デザイン */
     .ar-btn {
       position: fixed;
-      /* 【修正】位置を若干下げました（中央 50% から 60% に変更） */
-      top: 60%;
+      /* 位置を画面の中央より「若干下げた」絶妙な高さ（60%）に設定 */
+      top: 60%; 
       transform: translateY(-50%);
       display: flex;
       align-items: center;
       justify-content: center;
       
-      /* 雲のようなモコモコした形を作るためのサイズと角丸 */
-      width: 120px;
-      height: 75px;
+      /* くま耳に見えない、なめらかで自然な雲の形を作るサイズ */
+      width: 130px;
+      height: 65px;
       padding: 5px;
       text-align: center;
       text-decoration: none;
-      color: #333333; /* 文字色は見やすいように濃いグレーに */
+      color: #333333; /* 文字は読みやすいくすみグレー */
       font-weight: bold;
       font-size: 13px;
       line-height: 1.3;
       
-      /* 特殊な角丸を組み合わせて雲の形を表現 */
-      border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-      box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+      /* いびつな丸みを組み合わせて「ふんわりした雲」を表現 */
+      border-radius: 70% 40% 60% 30% / 60% 50% 50% 40%;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.12);
       z-index: 9999;
     }
 
-    /* 雲のモコモコ感を補強する疑似要素（ボタンの左右に丸みをプラス） */
-    .ar-btn::before, .ar-btn::after {
-      content: "";
-      position: absolute;
-      background: inherit;
-      border-radius: 50%;
-      z-index: -1;
-    }
-    /* 左側のモコモコ */
-    .ar-btn::before {
-      width: 50px;
-      height: 50px;
-      top: 10px;
-      left: -15px;
-    }
-    /* 右側のモコモコ */
-    .ar-btn::after {
-      width: 60px;
-      height: 60px;
-      top: 5px;
-      right: -15px;
-    }
-
-    /* 【修正】技秀堂HP（くすみのある優しい水色、パステル系） */
+    /* 左側のボタン：技秀堂HP（優しいくすみパステルブルー） */
     .btn-hp {
-      left: 35px; /* モコモコが画面からはみ出さないように少し内側に寄せました */
+      left: 25px;
       background-color: #A2D2FF;
     }
 
-    /* 【修正】プロフィール（暖かみのある、くすみイエロー） */
+    /* 右側のボタン：プロフィール（暖かみのあるくすみパステルイエロー） */
     .btn-profile {
-      right: 35px; /* 同様に少し内側に寄せています */
+      right: 25px;
       background-color: #FEF08A;
+      /* 左右で形のちがう自然な雲にするため、角丸の数値を少し反転 */
+      border-radius: 40% 70% 30% 60% / 50% 60% 40% 50%;
     }
   </style>
 </head>
 
 <body style="margin: 0; overflow: hidden;">
 
-  <!-- 【修正】文字を「技秀堂HP」に変更し、別タブ設定を維持 -->
+  <!-- スマホ画面に重なる雲ボタン（別タブで100%開く設定） -->
   <a href="http://www.gishudo.co.jp/" target="_blank" rel="noopener noreferrer" class="ar-btn btn-hp">技秀堂HP</a>
   <a href="../AR_Profile/index.html" target="_blank" rel="noopener noreferrer" class="ar-btn btn-profile">プロフィール</a>
 
+  <!-- AR空間の設定 -->
   <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;">
     
+    <!-- マーカートラック（pattern-Gichan.patt を目印にする） -->
     <a-marker type="pattern" url="pattern-Gichan.patt">
       
-      <!-- キャラクター画像（大きいサイズ） -->
-      <a-image src="Gichan_AR.png" position="0 0.5 0" width="1.5" height="2.25" rotation="-90 0 0"></a-image>
+      <!-- 
+        【ARで飛び出る新しい画像設定】
+        ・ファイル名を「Gichan_AR.png」に修正
+        ・画像サイズを少し大きめ（幅2.0、高さ3.0）に調整し、かざした時の迫力をアップ！
+      -->
+      <a-image src="Gichan_AR.png" position="0 0.5 0" width="2.0" height="3.0" rotation="-90 0 0"></a-image>
 
     </a-marker>
 
-    <!-- カメラ設定 -->
+    <!-- ARカメラの設定 -->
     <a-entity camera></a-entity>
   </scene>
 </body>
