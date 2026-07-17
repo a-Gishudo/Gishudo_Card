@@ -100,9 +100,11 @@ body {
 
 /* キャラクター画像 */
 .character-image {
-    width: 90px;
-    height: 90px;
+    width: 100px;
+    height: 100px;
     flex-shrink: 0;
+    margin-top: 10px;       /* ← 上部に少し隙間を作って、画像を下に押し下げます */
+    margin-bottom: -5px;    /* ← さらに下に食い込ませて下げたい場合は、マイナスの値を入れます */
 }
 
 .character-image img {
