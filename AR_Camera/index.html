@@ -6,11 +6,11 @@
   
   <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
   <script src="https://raw.githack.com/AR-js-org/AR.js/3.3.1/aframe/build/aframe-ar.js"></script>
-  <!-- 常に正面を向かせるための look-at コンポーネントを読み込みます -->
+  <!-- 常に正面を向かせるための look-at コンポーネント -->
   <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
 
   <style>
-    /* 【修正】ボタンの書体（フォント）をご指定のものに設定しました */
+    /* 指定された丸文字系フォントを適用 */
     body { 
       margin: 0; 
       overflow: hidden; 
@@ -20,7 +20,8 @@
     /* 雲ボタンの共通設定 */
     .ar-btn {
       position: fixed;
-      top: 60%; 
+      /* 【修正】被りを防ぐため、位置をさらに下げました（60% → 75%） */
+      top: 75%; 
       transform: translateY(-50%);
       display: flex;
       align-items: center;
@@ -67,12 +68,7 @@
     
     <a-marker type="pattern" url="pattern-Gichan.patt">
       
-      <!-- 
-        【修正：常にスマホ画面（カメラ）のほうを向く設定】
-        ・「look-at="[camera]"」を追加しました。これで名刺を傾けても、キャラクターが自動で首を振って常にこちらを向いてくれます！
-        ・正面を向く特性上、回転（rotation）は自動制御されるため削除しました。
-        ・高さは「position="0 1.5 0"」で空中フワフワ感をキープしています。
-      -->
+      <!-- 常にカメラを向く設定（look-at）のキャラクター画像 -->
       <a-image src="Gichan_AR.png" position="0 1.5 0" width="2.0" height="3.0" look-at="[camera]"></a-image>
 
     </a-marker>
